@@ -1,6 +1,8 @@
-import math
+'''
+Методы оптимизации 1-ого порядка одномерной функции
+'''
 
-
+# метод касательных
 def method_kasat(a, b, eps, func, df):
 
     func_k, df_k = 0, 0
@@ -21,7 +23,7 @@ def method_kasat(a, b, eps, func, df):
 
     return c_temp, func(c_temp), func_k, df_k
 
-
+# метод хорд
 def method_hord(a, b, eps, func, df):
     # используем приближение для второй производной
     x0, x1 = a, b

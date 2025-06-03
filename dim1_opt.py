@@ -4,6 +4,10 @@ from methods_opt0 import passive_search, dichotomy, golden_ratio, fibonacci_meth
 from method_opt1 import method_kasat, method_hord
 from method_opt2 import newton_rafson
 
+'''
+Методы оптимизации одномерных функций
+'''
+
 
 def my_func(x):
     return x * np.sin(x) + 2 * np.cos(x)
@@ -77,7 +81,6 @@ print("Метод хорд (секущих)")
 print(f"x_min = {method_hord(a, b, eps, my_func, df)[0]}, погрешность = {eps}")
 print(f"f(x_min) = {method_hord(a, b, eps, my_func, df)[1]}")
 print(f"Количество обращений к производной функции = {method_hord(a, b, eps, my_func, df)[2]}")
-
 
 # на графике отобразим все найденные минимумы и реальный минимум
 x_min = -4.49341

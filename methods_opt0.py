@@ -1,8 +1,13 @@
+'''
+Методы оптимизации 0-ого порядка одномерной функции
+'''
+
 import math
 
 
+# метод пассивного поиска
 def passive_search(a, b, eps, func):
-    # задаём количество разбиений
+    # задаём количество разбиений - здесь учитывается точность
     n = math.ceil((b - a) / eps)
 
     # счётчик для обращения к правой части
@@ -22,6 +27,7 @@ def passive_search(a, b, eps, func):
     return x[index_y_min], y[index_y_min], k
 
 
+# метод дихотомии
 def dichotomy(a, b, eps, delta, func):
     a_curr = a
     b_curr = b
@@ -47,6 +53,7 @@ def dichotomy(a, b, eps, delta, func):
     return (a_curr + b_curr) / 2, float(func((a_curr + b_curr) / 2)), k
 
 
+# метод золотого сечения
 def golden_ratio(a, b, eps, func):
     a_curr = a
     b_curr = b
@@ -82,7 +89,7 @@ def golden_ratio(a, b, eps, func):
 
     return (a_curr + b_curr) / 2, func((a_curr + b_curr) / 2), k
 
-
+# метод Фибоначчи
 def fibonacci(n):
     if n == 1 or n == 2:
         return 1
@@ -94,7 +101,7 @@ def fibonacci_method(a, b, eps, func):
     # выбираем n - количество итераций
     n = 1
     while True:
-        if fibonacci(n) >= 11 * (b-a) / (20*eps):
+        if fibonacci(n) >= 11 * (b - a) / (20 * eps):
             break
         else:
             n += 1
@@ -107,15 +114,13 @@ def fibonacci_method(a, b, eps, func):
     k = 0
 
     for k in range(1, n):
-        c_curr = a_curr + (b_curr - a_curr)*(fibonacci(n-k) / fibonacci(n+2-k))
-        d_curr = a_curr + (b_curr - a_curr)*(fibonacci(n+1-k)/fibonacci(n+2-k))
+        c_curr = a_curr + (b_curr - a_curr) * (fibonacci(n - k) / fibonacci(n + 2 - k))
+        d_curr = a_curr + (b_curr - a_curr) * (fibonacci(n + 1 - k) / fibonacci(n + 2 - k))
 
         if func(c_curr) < func(d_curr):
             b_curr = d_curr
-            k+=2
+            k += 2
         else:
             a_curr = c_curr
-            k+=2
+            k += 2
     return (a_curr + b_curr) / 2, func((a_curr + b_curr) / 2), k
-
-

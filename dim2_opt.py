@@ -1,6 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from methods_dim2 import coord_descent, grad_descent_step_split, mngs, fast_grad_p, ovr_method
+from methods_dim2 import coord_descent, grad_descent_step_split, mngs, fast_grad_p, ovr_method, method_newton, \
+    modif_method_newton, quasi_newton_method, fletcher_method
+
+'''
+Методы оптимизации многомерных (двумерных) функций
+'''
 
 
 def my_func2(x1, x2):
@@ -8,7 +13,13 @@ def my_func2(x1, x2):
 
 
 def df2(x1, x2):
-    return [1 + 4 * x1 / (1 + x1 ** 2 + x2 ** 2) ** 0.5, 2 + 4 * x2 / (1 + x1 ** 2 + x2 ** 2) ** 0.5]
+    return np.array([1 + 4 * x1 / (1 + x1 ** 2 + x2 ** 2) ** 0.5, 2 + 4 * x2 / (1 + x1 ** 2 + x2 ** 2) ** 0.5])
+
+
+def ddf2(x1, x2):
+    return np.array(
+        [[(4 + 4 * x2 ** 2) / (1 + x1 ** 2 + x2 ** 2) ** 1.5, (-4 * x1 * x2) / (1 + x1 ** 2 + x2 ** 2) ** 1.5],
+         [(-4 * x1 * x2) / (1 + x1 ** 2 + x2 ** 2) ** 1.5, (4 + 4 * x2 ** 2) / (1 + x1 ** 2 + x2 ** 2) ** 1.5]])
 
 
 x = np.linspace(-7, 7, 200)
@@ -57,4 +68,28 @@ print()
 print("Овражный метод")
 print(f"x_min={x_min_ovr}")
 print(f"f(x_min) = {my_func2(x_min_ovr[0], x_min_ovr[1])}")
+
+res_method_newton = method_newton(x0, df2, ddf2)
+print()
+print("Метод Ньютона")
+print(f"x_min={res_method_newton}")
+print(f"f(x_min) = {my_func2(res_method_newton[0], res_method_newton[1])}")
+
+res_mod_newton = modif_method_newton(x0, my_func2, df2, ddf2)
+print()
+print('Модифицированный метод Ньютона')
+print(f"x_min={res_mod_newton}")
+print(f"f(x_min) = {my_func2(res_mod_newton[0], res_mod_newton[1])}")
+
+res_quasi_newton = quasi_newton_method(my_func2, df2, x0)
+print()
+print('Квазиньютоновский метод Ньютона')
+print(f'x_min={res_quasi_newton}')
+print(f'f(x_min) = {my_func2(res_quasi_newton[0], res_quasi_newton[1])}')
+
+res_flecher = fletcher_method(x0, my_func2, df2)
+print()
+print('Метод Флетчера-Ривза')
+print(f'x_min={res_flecher}')
+print(f'f(x_min) = {my_func2(res_flecher[0], res_flecher[1])}')
 plt.show()

@@ -1,7 +1,8 @@
-import math
-from methods_opt0 import passive_search
+'''
+Метод оптимизации 2ого порядка для одномерной функции
+'''
 
-
+# метод ньютона-рафсона
 def newton_rafson(a, eps, func, df, ddf):
     x_0 = a
     df_k = 0
